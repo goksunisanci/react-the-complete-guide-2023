@@ -1,15 +1,16 @@
 import ConceptItem from "./ConceptItem";
+import { CONCEPTS } from "../data";
+import Section from "./Section";
+import "./Concepts.css"
 
-const Concepts = (props) => {
-    const rows = []
-    for (let item of props.items) {
-        rows.push(<ConceptItem title={item.title} image={item.image} description={item.description}></ConceptItem>)
-    }
-
+const Concepts = () => {
     return (
-        <ul id="concepts">
-            {rows}
-        </ul>
+        <Section id="concepts" title="Concepts">
+            <ul>
+                {CONCEPTS.map((item) => <ConceptItem key={item.title} title={item.title} image={item.image} description={item.description}></ConceptItem>)}
+
+            </ul>
+        </Section>
     )
 
 }
