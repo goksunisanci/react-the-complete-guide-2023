@@ -25,16 +25,22 @@ const App = (props) => {
   const handleAddToCart = (categoryId, productId, amount) => {
     let cartItem = cartContent.find(sushi => sushi.productId === productId)
     if (cartItem) {
-      setCartContent((prevContent) => {
-        return (prevContent.map((sushi) => {
-          if (sushi.productId === productId) {
-            return { ...cartItem, countInCart: cartItem.countInCart + amount }
-          } else {
-            return sushi
-          }
+      if (cartItem.countInCart + amount > 0) {
+        setCartContent((prevContent) => {
+          return (prevContent.map((sushi) => {
+            if (sushi.productId === productId) {
+              return { ...cartItem, countInCart: cartItem.countInCart + amount }
+            } else {
+              return sushi
+            }
+          })
+          )
         })
-        )
-      })
+      } else {
+        setCartContent((prevContent) => {
+          return prevContent.filter((sushi) => sushi.productId !== productId)
+        })
+      }
     } else {
       const addedSushi = sushis.find(category => category.categoryId === categoryId).products.find(sushi => sushi.productId === productId)
       const sushiOnCart = { ...addedSushi, countInCart: amount, categoryId: categoryId }
